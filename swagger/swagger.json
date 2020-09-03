@@ -1,0 +1,413 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {},
+        "license": {}
+    },
+    "paths": {
+        "/anime/add": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫"
+                ],
+                "summary": "动漫添加接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫名字",
+                        "name": "Name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "动漫链接",
+                        "name": "Link",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/delete": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫"
+                ],
+                "summary": "动漫添加接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "动漫名字",
+                        "name": "Name",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/get": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫"
+                ],
+                "summary": "动漫获取接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/type/add": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫类型"
+                ],
+                "summary": "动漫类型添加接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/type/delete": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫类型"
+                ],
+                "summary": "动漫类型删除接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/type/get": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫类型"
+                ],
+                "summary": "动漫类型获取接口",
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/type/update": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫类型"
+                ],
+                "summary": "动漫类型更新接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "新动漫类型",
+                        "name": "NewType",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/update": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "动漫"
+                ],
+                "summary": "动漫添加接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "动漫类型",
+                        "name": "Type",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "动漫名字",
+                        "name": "Name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "新动漫名字",
+                        "name": "NewName",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "新动漫类型",
+                        "name": "NewLink",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/is-signed-in": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户服务"
+                ],
+                "summary": "判断用户是否已经登录",
+                "responses": {
+                    "200": {
+                        "description": "执行结果:`true/false`",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/sign-in": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户服务"
+                ],
+                "summary": "用户登录接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户账号",
+                        "name": "passport",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户密码",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/sign-out": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户服务"
+                ],
+                "summary": "用户注销/退出接口",
+                "responses": {
+                    "200": {
+                        "description": "执行结果, 1: 未登录",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/sign-up": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户服务"
+                ],
+                "summary": "用户注册接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户账号名称",
+                        "name": "passport",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户密码",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "确认密码",
+                        "name": "password2",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户昵称",
+                        "name": "nickname",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "执行结果",
+                        "schema": {
+                            "$ref": "#/definitions/response.JsonResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "response.JsonResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "响应码",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "返回数据(业务接口定义具体数据结构)",
+                    "type": "object"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
