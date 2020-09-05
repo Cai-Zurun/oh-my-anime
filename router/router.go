@@ -27,6 +27,7 @@ func init() {
 			group.Group("/anime",func(group *ghttp.RouterGroup) {
 				group.ALL("/add", anime.AddAnime)
 				group.ALL("/get", anime.GetAnime)
+				group.ALL("/all/get", anime.GetAllAnime)
 				group.ALL("/delete", anime.DeleteAnime)
 				group.ALL("/update", anime.UpdateAnime)
 			})

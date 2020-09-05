@@ -1,12 +1,15 @@
 package anime
 
 import (
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/util/gconv"
+	"io/ioutil"
 	"oh-my-anime_gf/app/model/anime"
 	"github.com/gogf/gf/net/ghttp"
+	"os"
 )
 
 type AddAnimeInput struct {
@@ -16,7 +19,7 @@ type AddAnimeInput struct {
 	Img  *ghttp.UploadFile
 }
 
-const ImgPath = "/Users/zrun/Img/animeImg/"
+const ImgPath = "/Users/zrun/Img/animeImg/"		//部署到服务器时自定义修改
 
 func AddAnime(data *AddAnimeInput) error{
 	// 检查添加的类型是否已经存在
@@ -74,12 +77,37 @@ type GetAnimeInput struct {
 	Type string `v:"required#类型不能为空"`
 }
 
-func GetAnime(data *GetAnimeInput)  ([]*anime.Entity, error){
-	if !CheckType(data.Type) {
-		return nil, errors.New(fmt.Sprintf("%s类型不存在", data.Type))
+type AnimeOutput struct {
+	id int
+	Name string
+	Link string
+	Type string
+	CreateTime *gtime.Time
+	Img string
+}
+
+func GetAnime(Type string)  ([]AnimeOutput, error){
+	if !CheckType(Type) {
+		return nil, errors.New(fmt.Sprintf("%s类型不存在", Type))
 	}
-	AnimeArr, err := anime.FindAll("Type", data.Type)
-	return AnimeArr, err
+	AnimeArr, err := anime.FindAll("Type", Type)
+	Animes := make([]AnimeOutput, len(AnimeArr))
+	for i := 0; i <len(AnimeArr) ; i++ {
+		if AnimeArr[i].ImgPath != "" {
+			fmt.Println(AnimeArr[i].ImgPath)
+			file, _ := os.Open(AnimeArr[i].ImgPath)
+			buff, _ := ioutil.ReadAll(file)
+			imgEnc := base64.StdEncoding.EncodeToString(buff)
+			Animes[i].Img = imgEnc
+			//TODO::搞懂原理
+		}
+		Animes[i].id = AnimeArr[i].Id
+		Animes[i].Name = AnimeArr[i].Name
+		Animes[i].Link = AnimeArr[i].Link
+		Animes[i].Type = AnimeArr[i].Type
+		Animes[i].CreateTime = AnimeArr[i].CreateTime
+	}
+	return Animes, err
 }
 
 type DeleteAnimeInput struct {

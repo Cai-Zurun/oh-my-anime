@@ -3,6 +3,7 @@ package anime
 import (
 	"errors"
 	"fmt"
+	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/util/gconv"
 	"oh-my-anime_gf/app/model/anime"
@@ -40,6 +41,11 @@ func CheckType(Type string) bool {
 	} else {
 		return cnt != 0
 	}
+}
+
+func GetType()  []gdb.Value{
+	TypeArr, _ := anime_type.FindArray("type")
+	return 	TypeArr
 }
 
 type DeleteTypeInput struct {

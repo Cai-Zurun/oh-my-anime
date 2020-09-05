@@ -2,8 +2,10 @@ package anime
 
 import (
 	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/util/gconv"
 	"oh-my-anime_gf/app/service/anime"
 	"oh-my-anime_gf/library/response"
+	//animeModel "oh-my-anime_gf/app/model/anime"
 )
 
 // @summary 动漫添加接口
@@ -43,12 +45,21 @@ func GetAnime(r *ghttp.Request)  {
 	if err := r.Parse(&data); err != nil {
 		response.JsonExit(r, response.FAIL, err.Error())
 	}
-	AnimeArr, err := anime.GetAnime(data)
+	AnimeArr, err := anime.GetAnime(data.Type)
 	if err != nil {
 		response.JsonExit(r, response.FAIL, err.Error())
 	} else {
 		response.JsonExit(r, response.SUCCESS, "动漫获取成功", AnimeArr)
 	}
+}
+
+func GetAllAnime (r *ghttp.Request) {
+	TypeArr := anime.GetType()
+	AnimeArr := make([][]anime.AnimeOutput, len(TypeArr))
+	for i := 0; i < len(TypeArr); i++ {
+		AnimeArr[i], _ = anime.GetAnime(gconv.String(TypeArr[i]))
+	}
+	response.JsonExit(r, response.SUCCESS, "所有动漫获取成功", AnimeArr)
 }
 
 // @summary 动漫添加接口

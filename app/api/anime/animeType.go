@@ -2,7 +2,6 @@ package anime
 
 import (
 	"github.com/gogf/gf/net/ghttp"
-	"oh-my-anime_gf/app/model/anime_type"
 	"oh-my-anime_gf/app/service/anime"
 	"oh-my-anime_gf/library/response"
 )
@@ -31,11 +30,11 @@ func AddType(r *ghttp.Request) {
 // @router  /anime/type/get [GET]
 // @success 200 {object} response.JsonResponse "执行结果"
 func GetType(r *ghttp.Request) {
-	TypeArr, _ := anime_type.FindArray("type")
+	TypeArr := anime.GetType()
 	response.JsonExit(r, response.SUCCESS, "动漫类型获取成功", TypeArr)
 }
 
-// @summary 动漫类型删除接口
+// @summary 动漫类型删除接w口
 // @tags    动漫类型
 // @produce json
 // @param   Type formData string true "动漫类型"
