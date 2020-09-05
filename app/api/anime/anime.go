@@ -95,6 +95,7 @@ func UpdateAnime(r *ghttp.Request)  {
 	if err := r.Parse(&data); err != nil {
 		response.JsonExit(r, response.FAIL, err.Error())
 	}
+	data.NewImg = r.GetUploadFile("AnimeImg")
 	if err := anime.UpdateAnime(data); err != nil {
 		response.JsonExit(r, response.FAIL, err.Error())
 	} else {

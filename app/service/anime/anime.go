@@ -19,7 +19,7 @@ type AddAnimeInput struct {
 	Img  *ghttp.UploadFile
 }
 
-const ImgPath = "/Users/zrun/Img/animeImg/"		//部署到服务器时自定义修改
+const ImgPrePath = "/Users/zrun/Img/animeImg/"		//部署到服务器时自定义修改
 
 func AddAnime(data *AddAnimeInput) error{
 	// 检查添加的类型是否已经存在
@@ -35,9 +35,14 @@ func AddAnime(data *AddAnimeInput) error{
 		return err
 	}
 	entity.CreateTime = gtime.Now()
-	if err := SaveFile(data.Img, entity); err !=nil {
+	//if err := SaveFile(data.Img, entity); err !=nil {
+	//	return err
+	//}
+	name, err := data.Img.Save(ImgPrePath)
+	if err != nil {
 		return err
 	}
+	entity.ImgPath = ImgPrePath + name
 	if _, err := anime.Save(entity); err != nil {
 		return err
 	}
@@ -54,23 +59,13 @@ func CheckAnime(Name string, Type string) bool {
 	}
 }
 
-func SaveFile(File *ghttp.UploadFile, entity *anime.Entity)  error{
-	name, err := File.Save(ImgPath)
-	if err != nil {
-		return err
-	}
-	entity.ImgPath = ImgPath + name
-	return nil
-}
-
-//Where不知道该咋用
-//func CheckAnime(data *Info) bool {
-//	res := anime.Model.Where("Name", data.Name).And("Type", data.Type)
-//	fmt.Println(res)
-//	if res != nil {
-//		return false
+//func SaveFile(File *ghttp.UploadFile, entity *anime.Entity)  error{
+//	name, err := File.Save(ImgPath)
+//	if err != nil {
+//		return err
 //	}
-//	return true
+//	entity.ImgPath = ImgPath + name
+//	return nil
 //}
 
 type GetAnimeInput struct {
@@ -132,8 +127,10 @@ func DeleteAnime(data *DeleteAnimeInput) error {
 type UpdateAnimeInput struct {
 	Type string `v:"required#类型不能为空"`
 	Name string `v:"required#名字不能为空"`
+	NewType string
 	NewName string
 	NewLink string
+	NewImg  *ghttp.UploadFile
 }
 
 func UpdateAnime(data *UpdateAnimeInput)  error{
@@ -143,18 +140,47 @@ func UpdateAnime(data *UpdateAnimeInput)  error{
 	if !CheckAnime(data.Name, data.Type) {
 		return errors.New(fmt.Sprintf("%s 动漫不存在", data.Name))
 	}
-	if data.NewName != "" && data.NewLink != "" {
-		if _, err := anime.Model.Data("Name =? , Link=?", data.NewName, data.NewLink).Where("Type", data.Type).And("Name", data.Name).Update(); err != nil {
+	AnimeId, err := anime.Model.Where("type", data.Type).And("name", data.Name).Value("id")
+	if err != nil {
+		return err
+	}
+	if data.NewType != "" {
+		if _, err := anime.Model.Data("type", data.NewType).Where("id", AnimeId).Update(); err != nil {
 			return err
 		}
-	}else if data.NewName != "" {
-		if _, err := anime.Model.Data("Name", data.NewName).Where("Type", data.Type).And("Name", data.Name).Update(); err != nil {
+	}
+	if data.NewName != "" {
+		if _, err := anime.Model.Data("name", data.NewName).Where("id", AnimeId).Update(); err != nil {
 			return err
 		}
-	}else if data.NewLink != "" {
-		if _, err := anime.Model.Data("Link", data.NewLink).Where("Type", data.Type).And("Name", data.Name).Update(); err != nil {
+	}
+	if data.NewLink != "" {
+		if _, err := anime.Model.Data("link", data.NewLink).Where("id", AnimeId).Update(); err != nil {
+			return err
+		}
+	}
+	if data.NewImg != nil {
+		OldImgPath, err := anime.Model.Where("Id", AnimeId).Value("img_path")
+		if err != nil {
+			return err
+		}
+		NewImgPath, err := UpdateFile(gconv.String(OldImgPath), data.NewImg)
+		if err != nil {
+			return err
+		}
+		if _, err := anime.Model.Data("img_path", NewImgPath).Where("Id", AnimeId).Update(); err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+func UpdateFile(OldFIlePath string, NewFile *ghttp.UploadFile)(string, error){
+	os.Remove(OldFIlePath)
+	name, err := NewFile.Save(ImgPrePath)
+	if err != nil {
+		return "", err
+	}
+	ImgPath := ImgPrePath + name
+	return ImgPath, nil
 }
