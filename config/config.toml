@@ -4,6 +4,7 @@
 	ServerRoot  = "public"
 	ServerAgent = "oh-my-anime_gf"
 	LogPath     = "/tmp/log/oh-my-anime_gf/server"
+	SessionMaxAge    = "72h"
 
 # Logger.
 [logger]

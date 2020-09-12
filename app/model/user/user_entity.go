@@ -7,16 +7,14 @@ package user
 import (
 	"database/sql"
 	"github.com/gogf/gf/database/gdb"
-	"github.com/gogf/gf/os/gtime"
 )
 
 // Entity is the golang structure for table user.
 type Entity struct {
-    Id         uint        `orm:"id,primary"  json:"id"`          // 用户ID             
-    Passport   string      `orm:"passport"    json:"passport"`    // 账号               
-    Password   string      `orm:"password"    json:"password"`    // 密码               
-    Nickname   string      `orm:"nickname"    json:"nickname"`    // 昵称               
-    CreateTime *gtime.Time `orm:"create_time" json:"create_time"` // 创建时间/注册时间  
+    Id       uint   `orm:"id,primary" json:"id"`       // 用户ID  
+    Passport string `orm:"passport"   json:"passport"` // 账号    
+    Password string `orm:"password"   json:"password"` // 密码    
+    Nickname string `orm:"nickname"   json:"nickname"` // 昵称    
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers

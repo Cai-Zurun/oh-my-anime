@@ -1,7 +1,6 @@
 package user
 
 import (
-	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"oh-my-anime_gf/app/service/user"
 	"oh-my-anime_gf/library/response"
@@ -35,29 +34,30 @@ func (c *Controller) SignUp(r *ghttp.Request) {
 	}
 }
 
-type SignInRequest struct {
-	Passport string `v:"required#账号不能为空"`
-	Password string `v:"required#密码不能为空"`
-}
-
-// @summary 用户登录接口
-// @tags    用户服务
-// @produce json
-// @param   passport formData string true "用户账号"
-// @param   password formData string true "用户密码"
-// @router  /user/sign-in [POST]
-// @success 200 {object} response.JsonResponse "执行结果"
-func (c *Controller) SignIn(r *ghttp.Request)  {
-	var data *SignInRequest
-	if err := r.Parse(&data); err != nil {
-		response.JsonExit(r, response.FAIL, err.Error())
-	}
-	if err := user.SignIn(data.Passport, data.Password, r.Session); err != nil {
-		response.JsonExit(r, response.FAIL, err.Error())
-	} else {
-		response.JsonExit(r, response.SUCCESS, "登陆成功", g.Map{"SessionId": r.Session.Id()} )
-	}
-}
+// 这个是最初基于session的登录，新的基于jwt
+//type SignInRequest struct {
+//	Passport string `v:"required#账号不能为空"`
+//	Password string `v:"required#密码不能为空"`
+//}
+//
+//// @summary 用户登录接口
+//// @tags    用户服务
+//// @produce json
+//// @param   passport formData string true "用户账号"
+//// @param   password formData string true "用户密码"
+//// @router  /user/sign-in [POST]
+//// @success 200 {object} response.JsonResponse "执行结果"
+//func (c *Controller) SignIn(r *ghttp.Request)  {
+//	var data *SignInRequest
+//	if err := r.Parse(&data); err != nil {
+//		response.JsonExit(r, response.FAIL, err.Error())
+//	}
+//	if err := user.SignIn(data.Passport, data.Password, r.Session); err != nil {
+//		response.JsonExit(r, response.FAIL, err.Error())
+//	} else {
+//		response.JsonExit(r, response.SUCCESS, "登陆成功", g.Map{"SessionId": r.Session.Id()} )
+//	}
+//}
 
 // @summary 判断用户是否已经登录
 // @tags    用户服务

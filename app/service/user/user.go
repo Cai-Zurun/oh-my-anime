@@ -3,14 +3,15 @@ package user
 import (
 	"errors"
 	"fmt"
+	"github.com/gogf/gf/crypto/gmd5"
 	"github.com/gogf/gf/net/ghttp"
-	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/util/gconv"
 	"oh-my-anime_gf/app/model/user"
 )
 
 const (
 	USER_SESSION_MARK = "user_info"
+	SALT = "fdsafagfdgv43532ju76jM"
 )
 
 type SignUpInput struct {
@@ -37,7 +38,8 @@ func SignUp(data *SignUpInput) error {
 	if err := gconv.Struct(data, &entity); err != nil {
 		return err
 	}
-	entity.CreateTime = gtime.Now()
+	entity.Password, _ = gmd5.Encrypt(entity.Password + SALT)
+	//entity.CreateTime = gtime.Now()  // 去掉了create_time字段
 	if _, err := user.Save(entity); err != nil {
 		return err
 	}
@@ -68,16 +70,17 @@ func IsSignedIn(session *ghttp.Session) bool {
 	return session.Contains(USER_SESSION_MARK)
 }
 
-func SignIn(passport, password string, session *ghttp.Session) error {
-	one, err := user.FindOne("passport=? and password=?", passport, password)
-	if err != nil {
-		return err
-	}
-	if one == nil {
-		return errors.New("账号或密码错误")
-	}
-	return session.Set(USER_SESSION_MARK, one)
-}
+// 这个是最初基于session的登录，新的基于jwt
+//func SignIn(passport, password string, session *ghttp.Session) error {
+//	one, err := user.FindOne("passport=? and password=?", passport, password)
+//	if err != nil {
+//		return err
+//	}
+//	if one == nil {
+//		return errors.New("账号或密码错误")
+//	}
+//	return session.Set(USER_SESSION_MARK, one)
+//}
 
 func SignOut(session *ghttp.Session) error {
 	return session.Remove(USER_SESSION_MARK)

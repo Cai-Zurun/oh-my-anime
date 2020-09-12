@@ -3,6 +3,7 @@ module oh-my-anime_gf
 require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gogf/gf v1.13.4
+	github.com/gogf/gf-jwt v1.1.0
 	github.com/gogf/swagger v1.1.0
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.0-20200322061010-ea0c1cf2f119 // indirect

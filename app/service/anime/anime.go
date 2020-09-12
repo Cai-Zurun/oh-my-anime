@@ -144,12 +144,12 @@ func UpdateAnime(data *UpdateAnimeInput)  error{
 	if err != nil {
 		return err
 	}
-	if data.NewType != "" {
+	if data.NewType != "" && data.NewType != data.Type {
 		if _, err := anime.Model.Data("type", data.NewType).Where("id", AnimeId).Update(); err != nil {
 			return err
 		}
 	}
-	if data.NewName != "" {
+	if data.NewName != "" && data.NewName != data.Name {
 		if _, err := anime.Model.Data("name", data.NewName).Where("id", AnimeId).Update(); err != nil {
 			return err
 		}
