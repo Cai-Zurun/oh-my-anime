@@ -16,10 +16,11 @@ CREATE TABLE `anime` (
   `link` varchar(2083) NOT NULL COMMENT '链接',
   `type` varchar(45) NOT NULL COMMENT '类型',
   `create_time` timestamp NOT NULL COMMENT '创建时间/注册时间',
+  `img_path` varchar (2083) COMMENT '图片路径',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `anime_type` (
+CREATE TABLE `animeType` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '动漫类型ID',
   `type` varchar(45) NOT NULL COMMENT '动漫类型',
   PRIMARY KEY (`id`)

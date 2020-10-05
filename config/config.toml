@@ -20,7 +20,7 @@
 
 # Database.
 [database]
-    link  = "mysql:root:@tcp(127.0.0.1:3306)/anime_gf"
+    link  = "mysql:root:Asd///@tcp(127.0.0.1:3306)/anime_gf"
     debug = true
     # Database logger.
     [database.logger]

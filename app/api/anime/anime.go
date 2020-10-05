@@ -102,3 +102,18 @@ func UpdateAnime(r *ghttp.Request)  {
 		response.JsonExit(r, response.SUCCESS, "动漫更新成功")
 	}
 }
+
+func SearchAnime(r *ghttp.Request)  {
+	var data anime.SearchAnimeInput
+	if err := r.Parse(&data); err != nil {
+		response.JsonExit(r, response.FAIL, err.Error())
+	}
+	SearchRes, err := anime.SearchAnime(data.Name)
+	if err != nil{
+		response.JsonExit(r, response.FAIL, err.Error())
+	}else {
+		response.JsonExit(r, response.SUCCESS, "搜索动漫成功", SearchRes)
+	}
+}
+
+

@@ -82,3 +82,18 @@ func UpdateType(data *UpdateTypeInput)  error{
 	}
 	return nil
 }
+
+type UpdateSeqInput struct {
+	Order string `v:"required#指令不能为空"`
+	Type string `v:"required#类型不能为空"`
+}
+
+func UpdateSeq(data *UpdateSeqInput) error {
+	if data.Order != "up" && data.Order != "down" {
+		return errors.New("order必须为up或down")
+	}else if data.Order == "up" {
+
+	}else {
+
+	}
+}

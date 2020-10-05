@@ -26,7 +26,6 @@ func (c *Controller) SignUp(r *ghttp.Request) {
 	if err := r.Parse(&data); err != nil {
 		response.JsonExit(r, response.FAIL, err.Error())
 	}
-	println(data)
 	if err := user.SignUp(&data.SignUpInput); err != nil {
 		response.JsonExit(r, response.FAIL, err.Error())
 	} else {

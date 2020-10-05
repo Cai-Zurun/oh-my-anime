@@ -1,4 +1,4 @@
-package boot
+ package boot
 
 import (
 	"github.com/gogf/gf/frame/g"

@@ -72,7 +72,7 @@ func IsSignedIn(session *ghttp.Session) bool {
 
 // 这个是最初基于session的登录，新的基于jwt
 //func SignIn(passport, password string, session *ghttp.Session) error {
-//	one, err := user.FindOne("passport=? and password=?", passport, password)
+//	one, err := user.FindOne("pa ssport=? and password=?", passport, password)
 //	if err != nil {
 //		return err
 //	}

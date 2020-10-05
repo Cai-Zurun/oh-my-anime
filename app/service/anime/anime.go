@@ -89,7 +89,6 @@ func GetAnime(Type string)  ([]AnimeOutput, error){
 	Animes := make([]AnimeOutput, len(AnimeArr))
 	for i := 0; i <len(AnimeArr) ; i++ {
 		if AnimeArr[i].ImgPath != "" {
-			fmt.Println(AnimeArr[i].ImgPath)
 			file, _ := os.Open(AnimeArr[i].ImgPath)
 			buff, _ := ioutil.ReadAll(file)
 			imgEnc := base64.StdEncoding.EncodeToString(buff)
@@ -183,4 +182,31 @@ func UpdateFile(OldFIlePath string, NewFile *ghttp.UploadFile)(string, error){
 	}
 	ImgPath := ImgPrePath + name
 	return ImgPath, nil
+}
+
+type SearchAnimeInput struct {
+	Name string `v:"required#名字不能为空"`
+}
+
+func SearchAnime(Name string) ([]AnimeOutput, error){
+	// 假如Name就是完整的
+	Res, err := anime.FindAll("Name", Name)
+	if err != nil {
+		return nil, err
+	}
+	SearchRes := make([]AnimeOutput, len(Res))
+	for i := 0; i < len(Res); i++ {
+		if Res[i].ImgPath != "" {
+			file, _ := os.Open(Res[i].ImgPath)
+			buff, _ := ioutil.ReadAll(file)
+			imgEnc := base64.StdEncoding.EncodeToString(buff)
+			SearchRes[i].Img = imgEnc
+		}
+		SearchRes[i].id = Res[i].Id
+		SearchRes[i].Name = Res[i].Name
+		SearchRes[i].Link = Res[i].Link
+		SearchRes[i].Type = Res[i].Type
+		SearchRes[i].CreateTime = Res[i].CreateTime
+	}
+	return SearchRes, nil
 }
